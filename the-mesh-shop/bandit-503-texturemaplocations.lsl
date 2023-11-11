@@ -2,6 +2,12 @@
 #####   note this script is a list of different face ids, to guide where to set the texture for each part. 
 #####   You can get this boat at the mesh shop. http://maps.secondlife.com/secondlife/Dutch%20Harbor/130/154/21
 #####   Created by Hillary Davi on 11/10/2023
+/*
+* When you see the KEY in quotes this is the UUID of the texture that belongs to that part. 
+* The number ie 79 this is the texture face when the boat was created. 
+* llSetLinkTexture(79, "KEY", 1); 
+*/
+
 default
 {
     state_entry()
