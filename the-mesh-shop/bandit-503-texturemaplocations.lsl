@@ -1,6 +1,7 @@
 #####   script--dropinanew_Bandit_50/_v1.1
 #####   note this script is a list of different face ids, to guide where to set the texture for each part. 
 #####   You can get this boat at the mesh shop. http://maps.secondlife.com/secondlife/Dutch%20Harbor/130/154/21
+#####   Created by Hillary Davi on 11/10/2023
 default
 {
     state_entry()
