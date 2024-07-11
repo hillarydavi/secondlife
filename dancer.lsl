@@ -1,19 +1,35 @@
-//This script is created by another person in secondlife, and modified by Hillary Davi.
+/* DancerScript9 
+This script is created by another person in secondlife, and modified by Hillary Davi.
+By typing start or on it should start the dancer, if you type stop or off it will shut off the dancer. 
+*/
 
-// DancerScript7 - Addition of a new function, MusicResync(), not yet in use.
+/* 
+The following functions have been enhanced to provide additional functionalities:
+ - ResetToDefault(): Can be called in any state of the script. It resets all variables properly, anticipating future state creations.
+ - RequestionPerms(): Quickly requests permissions and is intended to be used with ResetToDefault().
 
-// ResetToDefault() and RequestionPerms() now allow two functionalities that the old and original functions did not.
+ MusicResync(): Currently undergoing logic testing and not yet implemented. This function aims to handle changes upon resynchronization.
+ The goal is to create a listener event that detects sync changes and executes the most recent change to the SoundClipNumber integer.
+ The SoundClipNumber integer is believed to control the currently playing sound.
 
-// ResetToDefault() - Can be called in any state of the script. This function's purpose is to reset all variables properly, anticipating the creation of future states.
-// RequestionPerms() - A quick function call to request permissions, intended for use with ResetToDefault().
+ particlestrigger(): Used to activate the particle system. This function also calls ResetToDefault() at the end.
 
-// MusicResync() - Currently undergoing logic testing; not yet implemented. The aim is to create a function to handle changes upon resynchronization.
-// The goal is to set up a listener event to detect sync changes and execute the most recent change to the SoundClipNumber integer.
-// This integer is believed to control the currently playing sound.
+PreloadAllSounds(): A new function to be called during a preload event.
+This function is run in the state entry to get a list of all sounds in the inventory and preload them.
+*/
 
 integer curSourceOpt = PSYS_PART_BF_ONE_MINUS_DEST_COLOR;
 integer curDestOpt = PSYS_PART_BF_ONE_MINUS_DEST_COLOR;
 integer particles_switch;
+
+integer ON = 0;                    //STATE OF SCRIPT
+//YOU EDIT THESE PARTS FOR NEW ANIMATIONS, SOUND CLIPS ETC. DO NOT TOUCH THE SCRIPT
+string animation = "dance";     //ANIMATION NAME
+integer MaxSoundClips = 16;         //AMOUNT OF SONG CLIPS, NAME THEM 1,2,3,4,ETC 
+integer SoundLength = 10;           //FIRST SERIES OF SOUND LENGTHS
+integer LastSoundLength = 3;       //INCASE LAST SOUND CLIP IS SHORTER
+integer SoundClipNumber = 0;       //FOR SOUND LOOP
+key id;
 
 particlestrigger() {
         if (particles_switch = 1)
@@ -54,14 +70,6 @@ PSYS_PART_START_GLOW,0.5,
     
 //End Particles - Start Dancer Instructions
 
-integer ON = 0;                    //STATE OF SCRIPT
-//YOU EDIT THESE PARTS FOR NEW ANIMATIONS, SOUND CLIPS ETC. DO NOT TOUCH THE SCRIPT
-string animation = "dance";     //ANIMATION NAME
-integer MaxSoundClips = 16;         //AMOUNT OF SONG CLIPS, NAME THEM 1,2,3,4,ETC 
-integer SoundLength = 10;           //FIRST SERIES OF SOUND LENGTHS
-integer LastSoundLength = 3;       //INCASE LAST SOUND CLIP IS SHORTER
-integer SoundClipNumber = 0;       //FOR SOUND LOOP
-key id;
 ResetToDefault()
 {
     llStopSound();
@@ -77,13 +85,24 @@ RequestionPerms() {
     llRequestPermissions(id, PERMISSION_TRIGGER_ANIMATION);
     ResetToDefault();
     }
-    
+ PreloadAllSounds()
+{  
+    integer totalInventory = llGetInventoryNumber(INVENTORY_SOUND);
+    integer i;
+    for(i = 0; i < totalInventory; i++)
+    {
+        string soundName = llGetInventoryName(INVENTORY_SOUND, i);
+        llPreloadSound(soundName);
+    }
+}  
+
 default
 {
     state_entry()
-    {   RequestionPerms();
+    {   
+        PreloadAllSounds(); //Preloading all sound files to play normal.
+        RequestionPerms();
         llParticleSystem([]);
-        ResetToDefault();
         llListen(0, "", "", "");
     }
     
@@ -93,6 +112,7 @@ default
         {
             llOwnerSay(" Commands 'on' or 'off'");
             llRequestPermissions(id, PERMISSION_TRIGGER_ANIMATION);
+            PreloadAllSounds();
         }
         else ResetToDefault();
     }
@@ -114,8 +134,9 @@ default
         if(ON == 1){llSetTimerEvent(SoundLength); ON = 2;}
         if(SoundClipNumber == MaxSoundClips){llSetTimerEvent(LastSoundLength); ON = 1; SoundClipNumber = 0;}
         llPreloadSound((string)(SoundClipNumber+1));
-        if (particles_switch = 1) { particlestrigger(); } else {
-            particlestrigger();
+        if (particles_switch = 1) { //particlestrigger(); 
+            } else {
+            //particlestrigger();
             particles_switch = 0; // This is to make sure when you say off it will turn off and not leave it on. 
             llParticleSystem([]); // This is a second check to make sure the particle system is off. 
             //Function should take care of this.
@@ -125,7 +146,7 @@ default
     listen(integer channel, string name, key id, string message)
     {
         message = llToLower(message);
-        if (ON == 0 && message == "on" | message == "Breakfast Burrito"  | message == "breakfast" | message == "burrito" )
+        if (ON == 0 && message == "on" | message == "start")
         {
             ON = 1;
             llStartAnimation(animation);
