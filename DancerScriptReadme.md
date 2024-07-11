@@ -7,9 +7,9 @@ Sound Looping: Play a series of sound clips in a loop, with preloading to minimi
 Particle Effects: Trigger particle effects when the dance animation starts.
 Permission Handling: Automatically request necessary permissions to trigger animations.
 Reset Functionality: Reset all variables and stop all effects with a single function call.
-<h1>Usage</h1>
 
-<h1>Commands</h1>
+<h1>Usage</h1>
+<h2>Commands</h2>
 start or on: Start the dancer animation and associated effects.
 stop or off: Stop the dancer animation and reset all effects.
 Setup
@@ -26,7 +26,7 @@ Attach the Script:
 
 Attach the script to the object in Second Life.
 
-<h1>Functions</h1>
+<h2>Functions</h2>
 ResetToDefault()
 Resets all variables and stops all animations and sounds. Can be called in any state of the script.
 RequestionPerms()
