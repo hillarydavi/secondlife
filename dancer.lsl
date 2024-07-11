@@ -52,12 +52,8 @@ PSYS_PART_START_GLOW,0.5,
      PSYS_PART_START_GLOW, 0.0,
      PSYS_PART_END_GLOW, 0.0, 
                         PSYS_PART_START_SCALE,<1.1,1.1,1.1>,
-                        PSYS_PART_END_SCALE,<0,0,0>, 
-        // PSYS_SRC_TEXTURE, "5521c74f-bd37-e88e-1180-e94b0dd22db2",
-         //PSYS_SRC_TEXTURE, "0ab43703-ba7d-05f8-0fb8-ebfa4e523bc5",
-        // PSYS_SRC_TEXTURE, "73c480bd-e009-a913-51c4-571055a2d02f",
-         
-         PSYS_SRC_TEXTURE, "ff8accf8-7154-55e9-854d-37b570b88e4c",
+                        PSYS_PART_END_SCALE,<0,0,0>,          
+         PSYS_SRC_TEXTURE, "NULL_KEY",
          PSYS_SRC_PATTERN, PSYS_SRC_PATTERN_EXPLODE
          //PSYS_PART_BLEND_FUNC_SOURCE, curSourceOpt,
          //PSYS_PART_BLEND_FUNC_DEST, curDestOpt
