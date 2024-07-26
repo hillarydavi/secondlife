@@ -5,7 +5,7 @@
  * Commands:
  * - "start" or "on" to start the dancer
  * - "stop" or "off" to stop the dancer
- */
+ */ 
 
 /* Enhanced Functions:
  * - ResetToDefault(): Resets all variables, preparing for future state changes. Can be called in any script state.
