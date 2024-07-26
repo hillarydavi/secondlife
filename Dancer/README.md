@@ -1,56 +1,63 @@
-# DancerScript 9.1
+# DancerScript 9.2/9.3/9.4
+#
 
-This script is created by another person in Second Life and modified by Hillary Davi. It controls a dancer animation and a series of sound clips. By typing "start" or "on," it will start the dancer. Typing "stop" or "off" will shut off the dancer.
+This script is created by another person in Second Life and modified by Hillary Davi. The script allows avatars to perform dance animations and play synchronized music with various enhanced functionalities.
 
-## Script Overview
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Usage](#usage)
+- [Functions](#functions)
+- [Known Issues](#known-issues)
+- [License](#license)
 
-### Main Features:
-- **ResetToDefault()**: Resets all variables and stops any running animations or sounds.
-- **RequestionPerms()**: Requests necessary permissions and resets the script to its default state.
-- **MusicResync()**: (Under development) Aims to handle changes in synchronization by listening for sync changes and executing the latest change to the `SoundClipNumber` integer.
-- **particlestrigger()**: Toggles the particle system on and off.
-  - To toggle: set `particles_switch = 1` (on) or `particles_switch = 0` (off).
-  - Call `particlestrigger(particles_switch)` to update the particle system.
-- **PreloadAllSounds()**: Preloads all sound files in the inventory to ensure smooth playback.
+## Introduction
+The DancerScript 9.2/9.3/9.4 is designed to enhance the dance experience in Second Life by synchronizing animations and sound clips, along with additional features like particle effects and sound preloading. 
 
-### Variables:
-- `integer ON`: State of the script (0: off, 1: starting, 2: running).
-- `string animation`: Name of the animation to play.
-- `integer MaxSoundClips`: Total number of sound clips.
-- `integer SoundLength`: Duration of each sound clip.
-- `integer LastSoundLength`: Duration of the last sound clip, if shorter.
-- `integer SoundClipNumber`: Tracks the current sound clip number.
-- `integer particles_switch`: Controls the particle system (0: off, 1: on).
+## Features
+- **Start and Stop Commands:** Control the dancer with simple text commands ("start" or "on" to start, "stop" or "off" to stop).
+- **Enhanced Functions:** Includes multiple utility functions for better control and customization.
+- **Particle Effects:** Toggle particle effects on and off during the dance performance.
+- **Sound Preloading:** Preloads all sounds in the inventory to ensure smooth playback.
+- **Synchronization:** Synchronizes music and animations seamlessly.
 
-### Particle System:
-- The particle system can be triggered by calling `particlestrigger(particles_switch)`.
-- The system uses various settings like `PSYS_PART_FLAGS`, `PSYS_SRC_PATTERN`, `PSYS_SRC_BURST_SPEED_MIN`, `PSYS_SRC_BURST_SPEED_MAX`, and more to create visual effects.
+## Usage
+1. **Attach the Script:** Attach the script to an object in Second Life.
+2. **Grant Permissions:** The script will request permissions to trigger animations.
+3. **Commands:** Use the following commands in local chat:
+   - `on` or `start`: Start the dancer.
+   - `off` or `stop`: Stop the dancer.
 
-## Script Functions
+## Functions
+### ResetToDefault()
+Resets all variables and prepares the script for future state changes. This function can be called in any state of the script.
 
-### ResetToDefault
-Resets the script to its initial state by:
-- Stopping sounds and animations.
-- Resetting timers and variables.
-- Disabling the particle system.
+### RequestionPerms()
+Requests necessary permissions from the owner and resets the script using `ResetToDefault()`.
 
-### RequestionPerms
-Requests necessary permissions from the owner and calls `ResetToDefault()`.
+### MusicResync()
+Handles changes upon resynchronization. This function is still undergoing logic testing and is not yet implemented.
 
-### PreloadAllSounds
-Preloads all sounds in the inventory to ensure they play without delay.
+### particlestrigger(particles_switch)
+Activates or deactivates the particle system based on the `particles_switch` parameter.
 
-## Script States and Events
+### PreloadAllSounds()
+Preloads all sound files in the inventory to ensure smooth playback.
 
-### State: default
-- **state_entry()**: Preloads all sounds, requests permissions, and sets up a listener for chat commands.
-- **attach(key id)**: Handles attachment events, requests permissions, and preloads sounds.
-- **changed(integer change)**: Resets the script if the owner or inventory changes.
-- **timer()**: Manages the playback of sound clips, setting timers, and preloading the next sound.
-- **listen(integer channel, string name, key id, string message)**: Listens for chat commands to start or stop the dancer.
+### PreloadAllSoundswithStatus()
+Similar to `PreloadAllSounds()`, but provides a status update on the preloading progress.
 
-## Usage Instructions
-- **Start the Dancer**: Type "start" or "on".
-- **Stop the Dancer**: Type "stop" or "off".
+### isInt(string s)
+Checks if a string is an integer. Adapted from [Second Life Community Forum](https://community.secondlife.com/forums/topic/108716-check-if-integer/).
 
-This script combines animation, sound playback, and particle effects to create a dynamic dancer experience in Second Life.
+## Known Issues
+- **Permission Issues:** The script may attempt to trigger animations without the necessary permissions. This can be resolved by resetting the script upon owner change.
+- **MusicResync:** The `MusicResync()` function is still in development and not fully functional.
+
+## License
+This script is provided as-is with no warranty. Use at your own risk. Modifications and enhancements are welcome.
+
+---
+
+For more information or to report issues, please contact Hillary Davi in Second Life.
+
