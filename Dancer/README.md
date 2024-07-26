@@ -1,5 +1,5 @@
 # DancerScript 9.2/9.3/9.4
-
+ 
 This script is created by another person in Second Life and modified by Hillary Davi. The script allows avatars to perform dance animations and play synchronized music with various enhanced functionalities.
 
 ## Table of Contents
