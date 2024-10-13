@@ -1,57 +1,70 @@
-# Slapper 2.0 Script
+# Slapper 2.4 Script
 
 ## Overview
-Slapper 2.0 is a scripted animation system designed to trigger right or left slap animations in response to specific commands issued on a private chat channel. It includes improvements from previous versions, ensuring that the slap animations are triggered smoothly without delays once a trigger command is received. The script listens for the `/69` command and based on the direction (`slapright` or `slapleft`), it activates the appropriate animation.
+
+This script is designed to trigger slap animations in a virtual environment. When avatars approach the object within a specified distance (0.5 meters), the script detects their position relative to the object and plays either a front or rear slap animation, with separate left and right slap animations for each.
 
 ## Features
-- **Right and Left Slap Animations**: Trigger `slapRight` or `slapLeft` animations based on user input.
-- **Distance Triggering**: The script only triggers the slap if the triggering avatar is within 2.8 meters of the object.
-- **Smooth Transition**: Fixes delay issues in previous versions, ensuring a seamless slap animation once triggered.
-- **Permissions Handling**: Automatically requests animation-triggering permissions from the object's owner.
-- **Slap Sound**: Plays a sound effect when a slap is triggered.
+
+- Detects avatars within 0.5 meters of the object.
+- Plays right or left slap animations based on the avatar's relative position (front or rear).
+- Plays a slap sound when triggered.
+- Supports both front-facing and rear-facing slap animations.
+
+## Script Details
+
+- **Front Animations**: 
+  - `slapRightAnim` triggers when the avatar is in front and to the right.
+  - `slapLeftAnim` triggers when the avatar is in front and to the left.
+  
+- **Back Animations**:
+  - `slapBackRightAnim` triggers when the avatar is behind and to the right.
+  - `slapBackLeftAnim` triggers when the avatar is behind and to the left.
+
+- **Sound**: The script preloads and plays a slap sound (`69cb141a-805b-2cb2-503e-f6dbac9f68a1`) whenever a slap is triggered.
+
+## Key Functions
+
+### `TriggerSlapAnimation(integer slap)`
+- Triggers the appropriate slap animation based on the avatar's position. 
+- Animation is chosen according to the slap type (front-right, front-left, back-right, back-left).
+
+### `SensorSlap()`
+- Creates a sensor to detect avatars within the maximum distance of 0.5 meters in a 360-degree range.
+
+### `listen(integer channel, string name, key id, string message)`
+- Listens for messages from avatars.
+- Checks the distance between the object and the avatar.
+- If within the distance, calls `SensorSlap()` to trigger the appropriate slap.
+
+### `sensor(integer detected)`
+- Processes the avatar's position relative to the object and determines if the avatar is in front or behind the object.
+- Calls `TriggerSlapAnimation()` based on the calculated angle and side of the avatar.
 
 ## Usage
-### Commands:
-- `/69 slapright`: Triggers the `slapRight` animation from the object inventory.
-- `/69 slapleft`: Triggers the `slapLeft` animation from the object inventory.
 
-### Conditions:
-- **Maximum Distance**: The avatar must be within 2.8 meters of the object for the slap animation to trigger.
-- **Permissions**: The script will request permission to trigger animations when it's started or when the owner changes.
+1. **Permissions**: 
+   - The script requests permission to trigger animations (`PERMISSION_TRIGGER_ANIMATION`).
 
-### Slap Sound:
-The script plays a predefined sound file (`69cb141a-805b-2cb2-503e-f6dbac9f68a1`) when a slap animation is triggered.
+2. **Trigger**: 
+   - The slap animations are triggered by an avatar approaching the object and sending a message.
+   
+3. **Reset**: 
+   - The script resets automatically if the owner or region changes.
 
-## Script Breakdown
-### Main Variables:
-- `ON`: Keeps track of the script's state (0 = idle, 1 = active).
-- `maxDistance`: Defines the maximum distance (2.8 meters) within which the slap can be triggered.
-- `slapRightAnim` and `slapLeftAnim`: Names of the slap animations in the object's inventory.
-- `anim`: Stores the current animation name.
+## How It Works
 
-### Main Functions:
-- `TriggerSlapAnimation(integer slap)`: Triggers either the right or left slap animation based on the input (`1` for right, `2` for left).
+- When an avatar comes within the detection range, the script determines whether the avatar is in front or behind the object.
+- Based on the side (left or right), it plays the appropriate animation and sound.
+- Slaps are animated based on predefined slap animations (`slapRight`, `slapLeft`, `slapBackRight`, `slapBackLeft`).
 
-### Event Listeners:
-- `state_entry()`: Preloads the slap sound and requests animation permissions.
-- `listen()`: Listens for commands on the `/69` channel and triggers the appropriate slap animation if the avatar is within range.
+## Configuration
 
-## Installation
-1. Copy the provided script into the object’s content in-world.
-2. Ensure the `slapRight` and `slapLeft` animations are in the object’s inventory.
-3. Add the sound file `69cb141a-805b-2cb2-503e-f6dbac9f68a1` to the object’s inventory.
-4. Save the script and reset it if needed.
+- **maxDistance**: The distance in meters to detect avatars and trigger the slap is set to `0.5`. You can modify this to adjust the detection range.
+- **Animations**: The script uses default animation names (`slapRight`, `slapLeft`, `slapBackRight`, `slapBackLeft`). These can be modified in the script if needed.
 
-## Known Issues
-- None reported for this version.
+## Changelog
 
-## Future Improvements
-- **Customization**: Add support for user-defined distances or custom animations.
-- **Enhanced Error Handling**: Provide feedback if permissions aren't granted or animations are missing.
-  
-## License
-This script is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-
-## Author
-- **Hillary Davi**
-  - Created on: 10/7/2024
+### Version 2.4 - 10/7/2024
+- Updated to trigger separate front and rear slap animations.
+- Added support for distinct right and left animations for both front and rear positions.
